@@ -309,7 +309,7 @@ type GenericMessage struct {
 	CRCHeader int32
 	CRCBody   int32
 	Body      string
-	Timestamp time.Time
+	Timestamp time.Time `json:"@timestamp"`
 }
 
 //Stdout return a generic message formated for stdout
