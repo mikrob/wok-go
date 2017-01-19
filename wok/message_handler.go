@@ -309,6 +309,8 @@ type GenericMessage struct {
 	CRCHeader int32
 	CRCBody   int32
 	Body      string
+	Offset    int64
+	Partition int32
 	Timestamp time.Time `json:"@timestamp"`
 }
 
@@ -330,7 +332,7 @@ func (m *Message) IsCompressed() bool {
 }
 
 //ToGenericMessage convert a wokmessage into a GenericMessage
-func (m *Message) ToGenericMessage() GenericMessage {
+func (m *Message) ToGenericMessage(offset int64, partition int32) GenericMessage {
 
 	if m.IsCompressed() {
 		m.UncompressBody()
@@ -345,6 +347,8 @@ func (m *Message) ToGenericMessage() GenericMessage {
 		CRCHeader: m.CRCHeader,
 		CRCBody:   m.CRCBody,
 		Body:      string(m.Body),
+		Offset:    offset,
+		Partition: partition,
 		Timestamp: m.Timestamp,
 	}
 	return gm
